@@ -3,147 +3,246 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="theme-color" content="#101b35">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#091426">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="CS Intelligence">
-<title>CS Intelligence</title>
+<title>CS Intelligence 2.0</title>
 <style>
+:root{
+--bg:#091426;--card:#14233b;--card2:#1b3050;
+--line:#2b405e;--text:#f4f8ff;--muted:#9cafcc;
+--cyan:#55e1db;--blue:#7890ff;--red:#ff8497;
+}
 *{box-sizing:border-box}
-body{margin:0;background:#f2f5fb;color:#17233e;font:15px -apple-system,BlinkMacSystemFont,sans-serif}
-header{background:#101b35;color:white;padding:22px 18px}
-header h1{margin:0;font-size:23px}
-header p{opacity:.7;margin:5px 0}
-nav{display:flex;overflow:auto;background:white;padding:10px;gap:6px}
-nav button{border:0;background:#edf1f8;padding:11px;border-radius:9px;color:#17233e}
-nav button.active{background:#2958de;color:white}
-main{padding:16px;max-width:750px;margin:auto}
-section{display:none}section.active{display:block}
-.card{background:white;border-radius:15px;padding:17px;margin:12px 0;box-shadow:0 2px 12px #152a4910}
-h2{font-size:21px}h3{font-size:16px}
-small{color:#64748b}
-textarea,input,select{width:100%;padding:12px;border:1px solid #d4dce8;border-radius:9px;font:inherit;margin:7px 0}
-textarea{min-height:130px}
-.action{background:#2958de;color:white;border:0;padding:13px 16px;border-radius:10px;width:100%;font-weight:600;margin:7px 0}
-.choice{display:block;width:100%;padding:13px;text-align:left;border:1px solid #d4dce8;background:white;border-radius:9px;margin:8px 0}
-.metric{font-size:28px;font-weight:bold;color:#2958de}
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-pre{white-space:pre-wrap;word-break:break-word;font:13px -apple-system,sans-serif}
+body{margin:0;background:var(--bg);color:var(--text);
+font:15px -apple-system,BlinkMacSystemFont,sans-serif}
+button,input,textarea{font:inherit}
+button{cursor:pointer}
+.app{max-width:700px;margin:auto;padding:24px 18px 115px}
+header{display:flex;align-items:center;gap:12px;margin-bottom:28px}
+.logo{width:45px;height:45px;border-radius:15px;
+background:linear-gradient(135deg,var(--cyan),var(--blue));
+display:grid;place-items:center;color:#091426;font-size:25px;font-weight:bold}
+header strong{font-size:21px}
+.muted,small{color:var(--muted)}
+small{font-size:12px}
+.avatar{margin-left:auto;border-radius:50%;padding:11px;background:#294365}
+.hero{background:linear-gradient(135deg,#203e67,#14253e);
+border:1px solid #375879;border-radius:22px;padding:24px;margin-bottom:20px}
+.hero h1{font-size:25px;margin:12px 0}
+.hero p{color:#c4d4ea;line-height:1.5}
+.tag{display:inline-block;background:#27566a;color:#79f1e6;
+padding:7px 11px;border-radius:30px;font-size:12px}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}
+.card{background:var(--card);border:1px solid var(--line);
+border-radius:19px;padding:17px;margin:12px 0}
+.metric{font-size:27px;font-weight:800;margin:9px 0;color:var(--cyan)}
+h2{font-size:21px;margin:24px 0 15px}
+h3{font-size:16px;margin:0 0 10px}
+p{line-height:1.5}
+.row{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.status{font-size:11px;padding:6px 9px;border-radius:20px;background:#523243;color:#ff9baa}
+.bar{height:8px;background:#31435e;border-radius:20px;overflow:hidden;margin:14px 0}
+.fill{height:100%;background:var(--cyan);border-radius:20px}
+.action{background:var(--cyan);color:#092034;border:0;
+padding:13px 16px;border-radius:12px;font-weight:750;width:100%;margin-top:10px}
+.secondary{background:#253a59;color:white}
+.choice{display:block;width:100%;text-align:left;background:#203552;
+color:white;border:1px solid #385171;border-radius:12px;padding:14px;margin:9px 0}
+input,textarea{width:100%;border:1px solid #385171;border-radius:12px;
+background:#0e1c32;color:white;padding:14px;margin:9px 0}
+textarea{min-height:160px}
+pre{white-space:pre-wrap;word-break:break-word;color:#d5e4f6;font:13px -apple-system,sans-serif}
+.page{display:none;animation:fade .2s ease}
+.page.active{display:block}
+@keyframes fade{from{opacity:.5;transform:translateY(6px)}to{opacity:1;transform:none}}
+nav{position:fixed;bottom:0;left:0;right:0;background:#111e34;
+border-top:1px solid #2a3e59;display:flex;justify-content:space-around;
+padding:12px 5px calc(12px + env(safe-area-inset-bottom));z-index:10}
+nav button{border:0;background:none;color:#9cafcc;min-width:0;flex:1;
+font-size:10px;padding:6px 2px}
+nav button span{display:block;font-size:22px;margin-bottom:5px}
+nav button.active{color:var(--cyan)}
+.notice{font-size:12px;color:#a8bad5;margin-top:16px}
 </style>
 </head>
 <body>
-<header><h1>✦ CS Intelligence</h1><p>Seu copiloto de Customer Success</p></header>
-<nav id="nav">
-<button class="active" data-page="home">Início</button>
-<button data-page="clients">Clientes</button>
-<button data-page="meetings">Reuniões</button>
-<button data-page="training">Treinamentos</button>
-<button data-page="scores">Performance</button>
-</nav>
-<main>
-<section id="home" class="active">
-<h2>Meu Dashboard</h2>
+<div class="app">
+<header>
+<div class="logo">✦</div>
+<div><strong>CS Intelligence</strong><br><small>YOUR SUCCESS COPILOT</small></div>
+<div class="avatar">GC</div>
+</header>
+
+<section id="home" class="page active">
+<div class="hero">
+<span class="tag">✦ Seu copiloto inteligente</span>
+<h1>Seu próximo nível em Customer Success.</h1>
+<p>Clientes, reuniões e treinamentos organizados em um só lugar.</p>
+</div>
 <div class="grid">
-<div class="card"><small>Clientes fictícios</small><div class="metric">2</div></div>
-<div class="card"><small>Clientes em risco</small><div class="metric">1</div></div>
+<div class="card"><small>Clientes</small><div class="metric">02</div></div>
+<div class="card"><small>Em risco</small><div class="metric" style="color:var(--red)">01</div></div>
+<div class="card"><small>Nota treino</small><div class="metric" id="homeScore">—</div></div>
 </div>
-<div class="card"><h3>Prioridade do dia</h3><p>⚠️ Metalúrgica Beta: investigar chamados e recuperar confiança.</p></div>
-<div class="card"><h3>Treinamento</h3><p>Pratique como atender um cliente insatisfeito e acompanhe seu desempenho.</p></div>
-</section>
-<section id="clients">
-<h2>Carteira de clientes</h2>
-<div class="card"><h3>Metalúrgica Beta</h3><p>🔴 Em risco · Health Score ilustrativo: 32/100</p><small>Dados fictícios</small></div>
-<div class="card"><h3>Indústria Alfa</h3><p>🟢 Onboarding · Health Score ilustrativo: 82/100</p><small>Dados fictícios</small></div>
-</section>
-<section id="meetings">
-<h2>Analisador de reuniões</h2>
+<h2>Suas prioridades</h2>
 <div class="card">
-<label>Transcrição</label>
-<textarea id="transcript" placeholder="Cole aqui a reunião fictícia..."></textarea>
-<button class="action" onclick="analyze()">Analisar transcrição</button>
-<pre id="analysis"></pre>
-<small>Triagem por palavras-chave. Não utiliza IA nesta versão.</small>
+<div class="row"><h3>Metalúrgica Beta</h3><span class="status">Em risco</span></div>
+<p class="muted">Investigar chamados e recuperar a confiança do cliente.</p>
+<div class="bar"><div class="fill" style="width:32%;background:var(--red)"></div></div>
+<small>Health Score fictício: 32/100</small>
+</div>
+<div class="card">
+<h3>🎓 Evolua seu atendimento</h3>
+<p class="muted">Pratique com um cliente fictício e acompanhe seu desempenho.</p>
+<button class="action" onclick="go('training')">Iniciar treinamento</button>
 </div>
 </section>
-<section id="training">
-<h2>Laboratório de treinamentos</h2>
+
+<section id="clients" class="page">
+<h2>Minha carteira</h2>
+<p class="muted">Acompanhamento demonstrativo de clientes.</p>
 <div class="card">
-<small>Simulação de atendimento · Cliente fictício</small>
-<h3 id="scenarioTitle"></h3>
+<div class="row"><h3>Metalúrgica Beta</h3><span class="status">Em risco</span></div>
+<p>Health Score: 32/100</p>
+<div class="bar"><div class="fill" style="width:32%;background:var(--red)"></div></div>
+<small>Próxima ação: reunião de recuperação</small>
+</div>
+<div class="card">
+<div class="row"><h3>Indústria Alfa</h3><span class="tag">Onboarding</span></div>
+<p>Health Score: 82/100</p>
+<div class="bar"><div class="fill" style="width:82%"></div></div>
+<small>Próxima ação: acompanhar implantação</small>
+</div>
+</section>
+
+<section id="meetings" class="page">
+<h2>✦ Analisador de reuniões</h2>
+<p class="muted">Identifique sinais de risco, pendências e possíveis oportunidades.</p>
+<div class="card">
+<h3>Transcrição da reunião</h3>
+<textarea id="transcript" placeholder="Cole aqui uma reunião fictícia..."></textarea>
+<button class="action" onclick="analyze()">Analisar reunião</button>
+<div id="result"></div>
+</div>
+<p class="notice">Triagem por palavras-chave, ainda sem inteligência artificial. Valide tudo antes de registrar no CRM.</p>
+</section>
+
+<section id="training" class="page">
+<h2>🎓 Laboratório de CS</h2>
+<p class="muted">Simulação de atendimento com cliente fictício.</p>
+<div class="card">
+<div class="row"><span class="tag">Treinamento</span><small id="stepLabel">Etapa 1/3</small></div>
+<h3 id="scenarioTitle" style="margin-top:18px"></h3>
 <p id="scenarioText"></p>
 <div id="choices"></div>
 <p id="feedback"></p>
-<button class="action" id="next" style="display:none" onclick="nextCase()">Próxima etapa</button>
+<button class="action" id="nextBtn" style="display:none" onclick="nextCase()">Continuar</button>
 </div>
 </section>
-<section id="scores">
-<h2>Minha performance</h2>
-<div class="card"><small>Simulações concluídas neste navegador</small><div class="metric" id="total">0</div></div>
+
+<section id="scores" class="page">
+<h2>📈 Minha performance</h2>
+<div class="grid" style="grid-template-columns:1fr 1fr">
+<div class="card"><small>Treinamentos</small><div class="metric" id="total">0</div></div>
 <div class="card"><small>Média de acertos</small><div class="metric" id="average">—</div></div>
-<div class="card"><h3>Critérios</h3><p>Escuta e empatia · Diagnóstico · Acompanhamento</p><small>As notas representam apenas exercícios fictícios.</small></div>
+</div>
+<div class="card">
+<h3>Competências praticadas</h3>
+<p>✓ Comunicação e empatia</p>
+<p>✓ Diagnóstico de problemas</p>
+<p>✓ Acompanhamento de clientes</p>
+<small>Resultados de exercícios, não de atendimentos reais.</small>
+</div>
+<button class="action secondary" onclick="resetScores()">Reiniciar resultados</button>
 </section>
-</main>
+</div>
+
+<nav>
+<button class="active" data-page="home" onclick="go('home')"><span>⌂</span>Início</button>
+<button data-page="clients" onclick="go('clients')"><span>♧</span>Clientes</button>
+<button data-page="meetings" onclick="go('meetings')"><span>▤</span>Reuniões</button>
+<button data-page="training" onclick="go('training')"><span>✦</span>Treinos</button>
+<button data-page="scores" onclick="go('scores')"><span>▥</span>Performance</button>
+</nav>
+
 <script>
 const $=id=>document.getElementById(id);
-document.querySelectorAll("nav button").forEach(b=>{
-b.onclick=()=>{
-document.querySelectorAll("nav button").forEach(x=>x.classList.remove("active"));
-document.querySelectorAll("section").forEach(x=>x.classList.remove("active"));
-b.classList.add("active");$(b.dataset.page).classList.add("active");
+function go(page){
+document.querySelectorAll(".page").forEach(x=>x.classList.remove("active"));
+$(page).classList.add("active");
+document.querySelectorAll("nav button").forEach(b=>b.classList.toggle("active",b.dataset.page===page));
+window.scrollTo(0,0);
 updateScores();
-};
-});
+}
 function analyze(){
 const t=$("transcript").value.toLowerCase();
-if(!t.trim()){$("analysis").textContent="Cole uma transcrição primeiro.";return}
-const risks=["cancelar","outro fornecedor","atraso","reclamação","problema"].filter(w=>t.includes(w));
-const tasks=["chamado","treinamento","retorno","integração"].filter(w=>t.includes(w));
-const opp=["automatizar","relatórios","estoque"].filter(w=>t.includes(w));
-$("analysis").textContent=
-"RISCOS POTENCIAIS:\n"+(risks.join(", ")||"Nenhum termo detectado")+
-"\n\nASSUNTOS PARA ACOMPANHAR:\n"+(tasks.join(", ")||"Nenhum termo detectado")+
-"\n\nNECESSIDADES A INVESTIGAR:\n"+(opp.join(", ")||"Nenhum termo detectado")+
-"\n\nValide os resultados antes de registrar no CRM.";
+if(!t.trim()){$("result").textContent="Insira uma transcrição.";return}
+const groups=[
+["⚠️ Riscos",["cancelar","outro fornecedor","atraso","reclamação","problema"]],
+["📋 Pendências",["chamado","treinamento","retorno","integração"]],
+["💡 Necessidades",["automatizar","relatórios","estoque"]]
+];
+const out=groups.map(([name,words])=>{
+const found=words.filter(w=>t.includes(w));
+return name+"\n"+(found.join(", ")||"Nenhum termo identificado");
+}).join("\n\n");
+$("result").replaceChildren();
+const box=document.createElement("pre");
+box.textContent=out+"\n\nAnálise preliminar. Responsáveis e prazos devem ser confirmados.";
+$("result").appendChild(box);
 }
 const cases=[
-{title:"Cliente insatisfeito",text:"Estou com um problema no faturamento. Já reclamei e ninguém resolveu!",opts:["Investigar o impacto e os chamados, demonstrando empatia.","Transferir imediatamente e encerrar.","Prometer resolução amanhã sem consultar a equipe."],right:0,why:"Empatia e diagnóstico devem vir antes de promessas."},
-{title:"Baixa adoção",text:"Minha equipe não consegue gerar os relatórios.",opts:["Vender outra solução imediatamente.","Investigar as dificuldades e propor treinamento direcionado.","Pedir que leiam o manual."],right:1,why:"Primeiro precisamos compreender e melhorar a adoção."},
-{title:"Próximos passos",text:"Preciso saber quando vocês vão retornar.",opts:["Responder quando for possível.","Garantir que tudo será resolvido hoje.","Registrar pendências, alinhar responsáveis e combinar o retorno."],right:2,why:"Compromissos claros e verificáveis fortalecem a confiança."}
+{title:"Cliente insatisfeito",text:"Estou com um problema no faturamento e ninguém resolveu!",opts:["Demonstrar empatia e investigar o impacto.","Transferir e encerrar o atendimento.","Prometer resolução amanhã."],correct:0,why:"O primeiro passo é compreender o problema e seu impacto."},
+{title:"Dificuldade de utilização",text:"Minha equipe não consegue gerar relatórios.",opts:["Oferecer outro produto.","Investigar a dificuldade e propor treinamento.","Pedir para ler o manual."],correct:1,why:"O foco inicial é melhorar a adoção da plataforma."},
+{title:"Compromisso com o cliente",text:"Preciso saber quando vocês vão retornar.",opts:["Responder quando possível.","Garantir resolução imediata.","Registrar pendências e combinar retorno."],correct:2,why:"O acompanhamento precisa ter compromissos claros."}
 ];
 let step=0,points=0,answered=false;
 function renderCase(){
 const c=cases[step];answered=false;
+$("stepLabel").textContent="Etapa "+(step+1)+"/3";
 $("scenarioTitle").textContent=c.title;
 $("scenarioText").textContent=c.text;
 $("feedback").textContent="";
-$("next").style.display="none";
-$("choices").innerHTML="";
-c.opts.forEach((o,i)=>{
+$("nextBtn").style.display="none";
+$("choices").replaceChildren();
+c.opts.forEach((option,i)=>{
 const b=document.createElement("button");
-b.className="choice";b.textContent=String.fromCharCode(65+i)+". "+o;
+b.className="choice";
+b.textContent=String.fromCharCode(65+i)+". "+option;
 b.onclick=()=>{
 if(answered)return;
 answered=true;
-if(i===c.right)points++;
-$("feedback").textContent=(i===c.right?"✅ Correto! ":"⚠️ Vamos melhorar. ")+c.why;
-$("next").style.display="block";
-$("next").textContent=step===2?"Finalizar treinamento":"Próxima etapa";
+if(i===c.correct)points++;
+$("feedback").textContent=(i===c.correct?"✅ Boa decisão! ":"⚠️ Podemos melhorar. ")+c.why;
+$("nextBtn").style.display="block";
+$("nextBtn").textContent=step===2?"Finalizar avaliação":"Próxima situação";
 };
 $("choices").appendChild(b);
 });
 }
+function getHistory(){
+try{return JSON.parse(localStorage.getItem("cs_training")||"[]")}catch{return []}
+}
 function nextCase(){
 if(step<2){step++;renderCase();return}
-const history=JSON.parse(localStorage.getItem("cs_training")||"[]");
-history.push({date:new Date().toISOString(),points,total:3});
-localStorage.setItem("cs_training",JSON.stringify(history));
-step=0;points=0;renderCase();updateScores();
-alert("Treinamento concluído! Veja sua nota na aba Performance.");
+const h=getHistory();
+h.push({date:new Date().toISOString(),points:points});
+try{localStorage.setItem("cs_training",JSON.stringify(h))}catch{}
+step=0;points=0;renderCase();go("scores");
 }
 function updateScores(){
-const h=JSON.parse(localStorage.getItem("cs_training")||"[]");
+const h=getHistory();
+const avg=h.length?Math.round(h.reduce((s,x)=>s+x.points,0)/(h.length*3)*100)+"%":"—";
 $("total").textContent=h.length;
-$("average").textContent=h.length?Math.round(h.reduce((s,x)=>s+x.points,0)/(h.length*3)*100)+"%":"—";
+$("average").textContent=avg;
+$("homeScore").textContent=avg;
+}
+function resetScores(){
+if(confirm("Apagar suas avaliações locais?")){
+localStorage.removeItem("cs_training");updateScores();
+}
 }
 renderCase();updateScores();
 </script>
